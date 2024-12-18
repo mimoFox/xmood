@@ -1,6 +1,8 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { UserSettingClass } from 'basic/src/main/ets/utils/Settings';
+
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -16,12 +18,24 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
-    //创建子窗口
-    const win = await windowStage.createSubWindow('ad_window')
-    // 显示子窗口
-    await win.showWindow()
-    // 加载广告页面
-    win.setUIContent('pages/start/Start')
+    // 实例化类对象
+    const setting = new UserSettingClass(this.context)
+
+    // 获取广告配置
+    const ad = await setting.getAdConfig()
+
+    // 存储到本地
+    setting.setUserAd(ad)
+
+    if (ad.showAd) {
+      //创建子窗口
+      const win = await windowStage.createSubWindow('ad_window')
+      // 显示子窗口
+      await win.showWindow()
+      // 加载广告页面
+      win.setUIContent('pages/start/Start')
+    }
+
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {

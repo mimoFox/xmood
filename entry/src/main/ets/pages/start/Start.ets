@@ -1,16 +1,19 @@
 import { AdvertClass } from 'basic/src/main/ets/models/Advert'
 import { window } from '@kit.ArkUI'
+import { UserSettingClass } from 'basic/src/main/ets/utils/Settings'
+
 
 @Entry
 @Component
 struct Start {
-  @State adObj: AdvertClass = {
-    showAd: false,
-    adTime: 5
-  }
+  @State adObj: AdvertClass = {} as AdvertClass
   @State timer: number = -1
 
   aboutToAppear(): void {
+    // 获取到本地存储的广告配置
+    const setting = new UserSettingClass(getContext())
+    this.adObj = setting.getUserAd()
+
     this.countDown()
   }
 
@@ -39,7 +42,7 @@ struct Start {
   build() {
     Stack({ alignContent: Alignment.TopEnd }) {
       Stack() {
-        Image($r('app.media.start'))
+        Image(this.adObj.adImage)
           .objectFit(ImageFit.Cover)
         Text('Xmood 物流助手')
           .fontSize(30)
