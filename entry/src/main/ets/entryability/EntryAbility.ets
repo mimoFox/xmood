@@ -1,7 +1,7 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-import { UserSettingClass } from 'basic/src/main/ets/utils/Settings';
+import { UserSettingClass } from 'basic';
 
 
 export default class EntryAbility extends UIAbility {

@@ -1,6 +1,7 @@
 import { preferences } from '@kit.ArkData'
-import { XMD_SETTING, XMD_SETTING_AD } from '../constants/constants'
-import { AdvertClass } from '../models/Advert'
+import { XMD_SETTING, XMD_SETTING_AD } from '../constants'
+import { AdvertClass } from '../models'
+
 
 // 广告的默认配置(后台返回的广告配置)
 export const defaultAd: AdvertClass = {

@@ -1,6 +1,14 @@
+import { AccountFormModel } from '../../models/Users'
+
 @Entry
 @Component
 struct Login {
+  @State accountForm: AccountFormModel = {
+    account: '',
+    password: ''
+  }
+  @State showLoading: boolean = false
+
   @Styles
   textInputStyle(){
     .height(58)
@@ -12,6 +20,14 @@ struct Login {
       },
       color: $r('app.color.back_divider')
     })
+  }
+
+  // 用户名密码非空判断
+  getFormValidate() {
+    if (this.accountForm.account && this.accountForm.password) {
+      return true
+    }
+    return false
   }
 
   build() {
@@ -40,10 +56,10 @@ struct Login {
       .margin({ top: 50 })
 
       Column({ space: 10 }) {
-        TextInput({ placeholder: '请输入账号' })
+        TextInput({ placeholder: '请输入账号', text: $$this.accountForm.account })
           .textInputStyle()
 
-        TextInput({ placeholder: '请输入密码' })
+        TextInput({ placeholder: '请输入密码', text: $$this.accountForm.password })
           .textInputStyle()
           .type(InputType.Password)
 
@@ -51,14 +67,25 @@ struct Login {
       .width('100%')
       .margin({ top: 20 })
 
-      Button('登录')
-        .width('100%')
-        .height(50)
-        .fontSize(20)
-        .type(ButtonType.Capsule)
-        .fontColor($r('app.color.white'))
-        .backgroundColor($r('app.color.btn_plain'))
-        .margin({ top: 30 })
+      Button() {
+        Row({ space: 10 }) {
+          if (this.showLoading) {
+            LoadingProgress()
+              .color($r('app.color.white'))
+              .width(30)
+          }
+          Text('登录')
+            .fontSize(20)
+            .fontColor($r('app.color.white'))
+        }
+
+      }
+      .width('100%')
+      .height(50)
+      .type(ButtonType.Capsule)
+      .backgroundColor(this.getFormValidate() ? $r('app.color.primary') : $r('app.color.btn_plain'))
+      .margin({ top: 30 })
+      .enabled(this.getFormValidate())
 
     }
     .padding({ left: 20, right: 20 })

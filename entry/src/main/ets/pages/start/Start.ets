@@ -1,6 +1,6 @@
 import { AdvertClass } from 'basic/src/main/ets/models/Advert'
 import { window } from '@kit.ArkUI'
-import { UserSettingClass } from 'basic/src/main/ets/utils/Settings'
+import { UserSettingClass } from 'basic'
 
 
 @Entry
