@@ -1,6 +1,7 @@
 import { LoginApi } from '../../api/User'
 import { AccountFormModel } from '../../models/Users'
 import { router } from '@kit.ArkUI'
+import { UserSettingClass } from 'basic'
 
 @Entry
 @Component
@@ -38,6 +39,10 @@ struct Login {
     try {
       const res = await LoginApi(this.accountForm)
       console.log('resData' + JSON.stringify(res))
+
+      const setting = new UserSettingClass(getContext())
+      setting.setUserToken(res)
+
       if (res) {
         router.replaceUrl({ url: 'pages/Index' })
       }

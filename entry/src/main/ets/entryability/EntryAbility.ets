@@ -36,8 +36,16 @@ export default class EntryAbility extends UIAbility {
       win.setUIContent('pages/start/Start')
     }
 
+    // 所有页面鉴权
+    const token = setting.getUserToken()
+    let path: string = ''
+    if (token) {
+      path = 'pages/Index'
+    } else {
+      path = 'pages/login/Login'
+    }
 
-    windowStage.loadContent('pages/login/Login', (err) => {
+    windowStage.loadContent(path, (err) => {
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
