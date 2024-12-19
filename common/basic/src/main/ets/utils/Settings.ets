@@ -1,5 +1,5 @@
 import { preferences } from '@kit.ArkData'
-import { xm_setting, xm_setting_ad } from '../constants/constants'
+import { XMD_SETTING, XMD_SETTING_AD } from '../constants/constants'
 import { AdvertClass } from '../models/Advert'
 
 // 广告的默认配置(后台返回的广告配置)
@@ -22,7 +22,7 @@ export class UserSettingClass {
   // 创建仓库
   getStore() {
     return preferences.getPreferencesSync(this.context, {
-      name: xm_setting
+      name: XMD_SETTING
     })
   }
 
@@ -32,7 +32,7 @@ export class UserSettingClass {
     const store = this.getStore()
 
     // 存储数据
-    store.putSync(xm_setting_ad, JSON.stringify(ad)) // 别忘记转换为字符串JSON.stringify(ad)
+    store.putSync(XMD_SETTING_AD, JSON.stringify(ad)) // 别忘记转换为字符串JSON.stringify(ad)
 
     // 写入数据
     store.flush()
@@ -44,7 +44,7 @@ export class UserSettingClass {
     const store = this.getStore()
 
     // 如果获取数据失败则用默认值
-    return JSON.parse(store.getSync(xm_setting_ad, JSON.stringify(defaultAd)) as string)
+    return JSON.parse(store.getSync(XMD_SETTING_AD, JSON.stringify(defaultAd)) as string)
   }
 
 
