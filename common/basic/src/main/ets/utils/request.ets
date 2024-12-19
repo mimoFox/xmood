@@ -20,7 +20,10 @@ service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 // Add a response interceptor.
 service.interceptors.response.use((response: AxiosResponse) => {
   // Do something about the response data.
-  return response;
+  if (response.status === 200 && response.data.code === 200) {
+    return response.data.data
+  }
+
 }, (error: AxiosError) => {
   // Do something with the response error.
   return Promise.reject(error);

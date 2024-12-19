@@ -1,5 +1,5 @@
 import { preferences } from '@kit.ArkData'
-import { XMD_SETTING, XMD_SETTING_AD } from '../constants'
+import { TOKEN_KEY, XMD_SETTING, XMD_SETTING_AD } from '../constants'
 import { AdvertClass } from '../models'
 
 
@@ -55,5 +55,20 @@ export class UserSettingClass {
         resolve(defaultAd)
       }, 500)
     })
+  }
+
+  setUserToken(token: string) {
+    // 获取仓库
+    const store = this.getStore()
+    store.putSync(TOKEN_KEY, token)
+    store.flush()
+  }
+
+  getUserToken() {
+    // 获取仓库
+    const store = this.getStore()
+
+    // 如果没有token，则设置为空
+    return store.getSync(TOKEN_KEY, '') as string
   }
 }

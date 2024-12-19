@@ -1,11 +1,13 @@
+import { LoginApi } from '../../api/User'
 import { AccountFormModel } from '../../models/Users'
+import { router } from '@kit.ArkUI'
 
 @Entry
 @Component
 struct Login {
   @State accountForm: AccountFormModel = {
-    account: '',
-    password: ''
+    account: 'xbsj001',
+    password: '123456'
   }
   @State showLoading: boolean = false
 
@@ -28,6 +30,22 @@ struct Login {
       return true
     }
     return false
+  }
+
+  // 登录请求
+  async Login() {
+    this.showLoading = true
+    try {
+      const res = await LoginApi(this.accountForm)
+      console.log('resData' + JSON.stringify(res))
+      if (res) {
+        router.replaceUrl({ url: 'pages/Index' })
+      }
+    } catch (err) {
+      console.log('登录失败' + err)
+    } finally {
+      this.showLoading = false
+    }
   }
 
   build() {
@@ -78,7 +96,6 @@ struct Login {
             .fontSize(20)
             .fontColor($r('app.color.white'))
         }
-
       }
       .width('100%')
       .height(50)
@@ -86,6 +103,9 @@ struct Login {
       .backgroundColor(this.getFormValidate() ? $r('app.color.primary') : $r('app.color.btn_plain'))
       .margin({ top: 30 })
       .enabled(this.getFormValidate())
+      .onClick(() => {
+        this.Login()
+      })
 
     }
     .padding({ left: 20, right: 20 })
