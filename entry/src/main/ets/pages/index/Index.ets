@@ -1,4 +1,7 @@
 import { TabBarModel } from 'basic'
+import Message from './message/Message'
+import My from './my/My'
+import Task from './task/Task'
 
 @Entry
 @Component
@@ -37,7 +40,13 @@ struct Index {
       Tabs({ barPosition: BarPosition.End, index: $$this.currentIndex }) {
         ForEach(this.tabsData, (item: TabBarModel, index: number) => {
           TabContent() {
-            Text(item.name)
+            if (this.currentIndex === 0) {
+              Task()
+            } else if (this.currentIndex === 1) {
+              Message()
+            } else if (this.currentIndex === 2) {
+              My()
+            }
           }.tabBar(this.tabsBuilder(item.icon as string, item.text, index))
         })
       }

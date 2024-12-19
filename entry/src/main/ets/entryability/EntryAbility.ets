@@ -40,7 +40,7 @@ export default class EntryAbility extends UIAbility {
     const token = setting.getUserToken()
     let path: string = ''
     if (token) {
-      path = 'pages/Index'
+      path = 'pages/index/Index'
     } else {
       path = 'pages/login/Login'
     }
