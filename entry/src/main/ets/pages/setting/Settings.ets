@@ -1,34 +1,29 @@
-import { iCard, iCardItem } from 'basic';
-import { router } from '@kit.ArkUI';
+import { iCard, iCardItem, iConfirmDialog, iNavBar } from 'basic';
 
 @Entry
 @Component
 struct Settings {
-  @State message: string = 'Hello World';
+  controller: CustomDialogController = new CustomDialogController({
+    builder: iConfirmDialog({
+      title: '确定退出登录吗？',
+      btnList: [
+        {
+          text: '取消'
+        },
+        {
+          text: '退出',
+          fontcolor: $r('app.color.primary'),
+          action: () => {
+            AlertDialog.show({ message: '666' })
+          }
+        }
+      ]
+    })
+  })
 
   build() {
     Column() {
-      Stack({ alignContent: Alignment.Start }) {
-        Row() {
-          Text('系统设置')
-            .fontSize(16)
-            .fontColor($r('app.color.text_primary'))
-            .fontWeight(600)
-        }
-        .width('100%')
-        .justifyContent(FlexAlign.Center)
-        .alignItems(VerticalAlign.Center)
-
-        Image($r('app.media.arrow_left'))
-          .width(20).autoResize(true)
-          .margin({ left: 8 })
-          .onClick(() => {
-            router.back()
-          })
-      }
-      .width('100%')
-      .height(50)
-      .backgroundColor($r('app.color.white'))
+      iNavBar({ title: '系统设置' })
 
       Column() {
         iCard() {
@@ -51,6 +46,9 @@ struct Settings {
         .backgroundColor($r('app.color.white'))
         .width('100%')
         .height('100%')
+        .onClick(() => {
+          this.controller.open()
+        })
 
       }
       .padding({ left: 20, right: 20 })

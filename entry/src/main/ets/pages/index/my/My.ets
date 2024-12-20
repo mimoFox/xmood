@@ -1,6 +1,7 @@
 import { iCard, iCardItem } from 'basic'
 import { getTaskInfoApi, getUserInfoApi } from '../../../api'
 import { TaskInfoModel, TaskParamsModel, UserInfoModel } from '../../../models'
+import { router } from '@kit.ArkUI'
 
 @Component
 export default struct My {
@@ -156,7 +157,7 @@ export default struct My {
           Divider()
           iCardItem({
             title: '系统设置', onArrowClick() {
-
+              router.pushUrl({ url: 'pages/setting/Settings' })
             }
           })
         }
