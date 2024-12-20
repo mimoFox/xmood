@@ -1,29 +1,45 @@
 import { iCard, iCardItem } from 'basic'
+import { getUserInfoApi } from '../../../api'
+import { UserInfoModel } from '../../../models'
 
 @Component
 export default struct My {
-  @Styles
-  textStyles() {
+  @State userInfo: UserInfoModel = {
+    avatar: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F95844b1e-4e9a-43d7-8b26-745a585eb02a%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1737253865&t=03074126e7ca2927a956bdb7e1eb4fb9',
+    name: '',
+    number: '',
+    phone: ''
+  } as UserInfoModel
 
+  aboutToAppear(): void {
+    this.getUserInfo()
+  }
+
+  async getUserInfo() {
+    try {
+      this.userInfo = await getUserInfoApi()
+    } catch (err) {
+      console.log('获取用户信息失败：' + err)
+    }
   }
 
   build() {
     Column() {
       Column({ space: 10 }) {
-        Image('https://iknow-pic.cdn.bcebos.com/810a19d8bc3eb1354bb3a625b41ea8d3fd1f4433')
+        Image(this.userInfo?.avatar)
           .width(60)
           .height(60)
           .borderRadius(30)
           .margin({ top: 50 })
-        Text('XMood')
+        Text(this.userInfo?.name)
           .fontSize(20)
           .fontWeight(600)
           .fontColor($r('app.color.white'))
           .margin({ top: 5, bottom: 5 })
-        Text('司机编号：666666')
+        Text(`司机编号：${this.userInfo?.number}`)
           .fontSize(15)
           .fontColor($r('app.color.white'))
-        Text('手机号：177 9898 8888')
+        Text(`手机号：${this.userInfo?.phone}`)
           .fontSize(15)
           .fontColor($r('app.color.white'))
       }

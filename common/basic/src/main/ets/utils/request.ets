@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from '@ohos/axios';
+import { UserSettingClass } from '../../../../Index';
 import { BASE_URL } from '../constants';
 
 
@@ -10,6 +11,12 @@ export const service = axios.create({
 // Add a request interceptor.
 service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   // Do something about the request data.
+  // 设置请求头携带token信息
+  const setting = new UserSettingClass(getContext())
+  const token = setting.getUserToken()
+  if (token) {
+    config.headers.Authorization = token
+  }
   return config;
 }, (error: AxiosError) => {
   // Do something with the request error.

@@ -44,7 +44,7 @@ struct Login {
       setting.setUserToken(res)
 
       if (res) {
-        router.replaceUrl({ url: 'pages/Index' })
+        router.replaceUrl({ url: 'pages/index/Index' })
       }
     } catch (err) {
       console.log('登录失败' + err)
