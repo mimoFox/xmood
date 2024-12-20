@@ -71,4 +71,15 @@ export class UserSettingClass {
     // 如果没有token，则设置为空
     return store.getSync(TOKEN_KEY, '') as string
   }
+
+  deleteUserToken() {
+    // 获取仓库
+    const store = this.getStore()
+
+    // 删除token
+    store.deleteSync(TOKEN_KEY)
+
+    // 写入磁盘
+    store.flush()
+  }
 }
