@@ -5,7 +5,7 @@ export struct iCard {
   iCarFn: () => void
 
   build() {
-    Column({ space: 20 }) {
+    Column({ space: 5 }) {
       if (this.iCarFn) {
         this.iCarFn()
       }
