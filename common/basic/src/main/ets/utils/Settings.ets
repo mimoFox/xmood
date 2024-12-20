@@ -6,7 +6,7 @@ import { AdvertClass } from '../models'
 // 广告的默认配置(后台返回的广告配置)
 export const defaultAd: AdvertClass = {
   // 广告时长
-  adTime: 10,
+  adTime: 2,
   // 显示广告
   showAd: true,
   //  广告图片

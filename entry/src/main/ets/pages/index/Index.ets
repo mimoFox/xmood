@@ -23,7 +23,7 @@ struct Index {
       name: 'my'
     }
   ]
-  @State currentIndex: number = 0
+  @State currentIndex: number = 2
 
   @Builder
   tabsBuilder(icon: ResourceStr, text: string, index: number) {
