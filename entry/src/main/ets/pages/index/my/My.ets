@@ -1,6 +1,6 @@
 import { iCard, iCardItem } from 'basic'
-import { getUserInfoApi } from '../../../api'
-import { UserInfoModel } from '../../../models'
+import { getTaskInfoApi, getUserInfoApi } from '../../../api'
+import { TaskInfoModel, TaskParamsModel, UserInfoModel } from '../../../models'
 
 @Component
 export default struct My {
@@ -10,9 +10,19 @@ export default struct My {
     number: '',
     phone: ''
   } as UserInfoModel
+  @State taskInfo: TaskInfoModel = {
+    taskAmounts: 0,
+    completedAmounts: 0,
+    transportMileage: 0
+  } as TaskInfoModel
+  @State taskParams: TaskParamsModel = {
+    month: (new Date().getMonth() + 1).toString(),
+    year: new Date().getFullYear().toString()
+  }
 
   aboutToAppear(): void {
     this.getUserInfo()
+    this.getTaskInfo()
   }
 
   async getUserInfo() {
@@ -20,6 +30,14 @@ export default struct My {
       this.userInfo = await getUserInfoApi()
     } catch (err) {
       console.log('获取用户信息失败：' + err)
+    }
+  }
+
+  async getTaskInfo() {
+    try {
+      this.taskInfo = await getTaskInfoApi(this.taskParams)
+    } catch (err) {
+      console.log('获取任务信息失败：' + err)
     }
   }
 
@@ -45,6 +63,7 @@ export default struct My {
       }
       .height(292)
       .width('100%')
+      .borderRadius({ bottomLeft: 50, bottomRight: 50 })
       .backgroundColor($r('app.color.primary'))
 
 
@@ -57,17 +76,17 @@ export default struct My {
 
           Row({ space: 30 }) {
             Column({ space: 20 }) {
-              Text('18').fontSize(20).fontWeight(500)
+              Text(`${this.taskInfo?.taskAmounts}`).fontSize(20).fontWeight(500)
               Text('任务总量').fontSize(16)
             }
 
             Column({ space: 20 }) {
-              Text('16').fontSize(20).fontWeight(500)
+              Text(`${this.taskInfo?.completedAmounts}`).fontSize(20).fontWeight(500)
               Text('完成任务量').fontSize(16)
             }
 
             Column({ space: 20 }) {
-              Text('3987').fontSize(20).fontWeight(500)
+              Text(`${this.taskInfo?.transportMileage}`).fontSize(20).fontWeight(500)
               Text('运输里程(km)').fontSize(16)
             }
           }
@@ -123,11 +142,23 @@ export default struct My {
         // .margin({ top: 15 })
 
         iCard() {
-          iCardItem({ title: '车辆信息' })
+          iCardItem({
+            title: '车辆信息', onArrowClick() {
+
+            }
+          })
           Divider()
-          iCardItem({ title: '任务数据' })
+          iCardItem({
+            title: '任务数据', onArrowClick() {
+
+            }
+          })
           Divider()
-          iCardItem({ title: '系统设置' })
+          iCardItem({
+            title: '系统设置', onArrowClick() {
+
+            }
+          })
         }
 
       }

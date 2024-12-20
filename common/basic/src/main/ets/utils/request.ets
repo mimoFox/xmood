@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from '@ohos/axios';
 import { UserSettingClass } from '../../../../Index';
 import { BASE_URL } from '../constants';
-import { router } from '@kit.ArkUI';
+import { promptAction, router } from '@kit.ArkUI';
 
 
 export const service = axios.create({
@@ -36,13 +36,16 @@ service.interceptors.response.use((response: AxiosResponse) => {
   // Do something with the response error.
   // token过期了
   if (error.response?.status === 401) {
+    promptAction.showToast({
+      message: '登录超时了~'
+    })
     // 删除旧token
     const setting = new UserSettingClass(getContext())
     setting.deleteUserToken()
     // 也可以用下面的方法删除，将token设置为空
     //setting.setUserToken('')
 
-    
+
     // 重新跳转登录页面
     router.replaceUrl({ url: 'pages/login/Login' })
   }

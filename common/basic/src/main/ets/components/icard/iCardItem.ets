@@ -5,6 +5,8 @@ export struct iCardItem {
   showRightIcon: boolean = true
   rightIcon: ResourceStr = $r('app.media.arrow_right')
   showBottomBorder: boolean = false
+  onArrowClick: () => void = () => {
+  }
 
   build() {
     Row() {
@@ -22,6 +24,9 @@ export struct iCardItem {
         if (this.showRightIcon) {
           Image(this.rightIcon)
             .width(20)
+            .onClick(() => {
+              this.onArrowClick()
+            })
         }
       }
     }
