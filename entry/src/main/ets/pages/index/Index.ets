@@ -23,7 +23,7 @@ struct Index {
       name: 'my'
     }
   ]
-  @State currentIndex: number = 2
+  @State currentIndex: number = 0
 
   @Builder
   tabsBuilder(icon: ResourceStr, text: string, index: number) {
@@ -40,16 +40,18 @@ struct Index {
       Tabs({ barPosition: BarPosition.End, index: $$this.currentIndex }) {
         ForEach(this.tabsData, (item: TabBarModel, index: number) => {
           TabContent() {
-            if (this.currentIndex === 0) {
+            if (index === 0) {
               Task()
-            } else if (this.currentIndex === 1) {
+            } else if (index === 1) {
               Message()
-            } else if (this.currentIndex === 2) {
+            } else if (index === 2) {
               My()
             }
           }.tabBar(this.tabsBuilder(item.icon as string, item.text, index))
         })
       }
+      .animationDuration(400)
+      .barMode(BarMode.Fixed)
     }
     .height('100%')
     .width('100%')

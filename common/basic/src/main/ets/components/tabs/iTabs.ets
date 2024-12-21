@@ -1,24 +1,13 @@
-import { TabBarModel } from 'basic'
-import TaskList from './TaskList'
+import { TabBarModel } from '../../models'
 
 @Component
-export default struct Task {
-  tabsData: TabBarModel[] = [
-    {
-      text: '待提货',
-      name: 'waiting'
-    },
-    {
-      text: '在途',
-      name: 'line'
-    },
-    {
-      text: '已完成',
-      name: 'finish'
-    }
-  ]
+export struct iTabs {
+  tabsData: TabBarModel[] = []
   @State currentIndex: number = 0
   controller: TabsController = new TabsController()
+  // 定义一个插槽，插入iCardItem
+  @BuilderParam
+  iTabsItemFn: () => void
 
   @Builder
   tabsBuilder(item: TabBarModel, index: number) {
@@ -50,11 +39,17 @@ export default struct Task {
           ForEach(this.tabsData, (item: TabBarModel, index: number) => {
             TabContent() {
               if (item.name === 'waiting') {
-                TaskList()
+                if (this.iTabsItemFn) {
+                  this.iTabsItemFn()
+                }
               } else if (item.name === 'line') {
-                Text('line')
+                if (this.iTabsItemFn) {
+                  this.iTabsItemFn()
+                }
               } else if (item.name === 'finish') {
-                Text('finish')
+                if (this.iTabsItemFn) {
+                  this.iTabsItemFn()
+                }
               }
             }.tabBar(item.text)
           })
@@ -73,6 +68,5 @@ export default struct Task {
     }
     .width('100%')
     .height('100%')
-    .backgroundColor($r('app.color.background_page'))
   }
 }
